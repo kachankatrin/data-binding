@@ -26,21 +26,42 @@
 const axios = require('axios');
 export default {
   name: "Binding",
-  data() {
-    return {
-      text: "style me!",
-      styled: "",
-      bgcolor: "",
-      show: true,
-      info: {},
-      employee: {
-        id: "",
-        value: "init",
-        lastName: "",
-        department: ""
-      }
-    };
+  props: {
+    styled: {
+      type: String,
+      required: true,
+      default: ""
+    },
+    bgcolor: {
+      type: String,
+      required: true,
+      default: ""
+    },
+    show: {
+      type: Boolean,
+      required: true,
+      default: true
+    },
+    employee: {
+      type: Object,
+      required: true
+    }
   },
+  // data() {
+  //   return {
+  //     text: "style me!",
+  //     styled: "",
+  //     bgcolor: "",
+  //     show: true,
+  //     info: {},
+  //     employee: {
+  //       id: "",
+  //       // value: "init",
+  //       lastName: "",
+  //       department: ""
+  //     }
+  //   };
+  // },
   computed: {
     isVisible() {
       return this.show ? "visible" : "hidden";
@@ -54,9 +75,9 @@ export default {
   },
   updated() {},
   methods: {
-    hide() {
-      this.show = !this.show;
-    },
+    // hide() {
+    //   this.show = !this.show;
+    // },
     init() {
       setInterval(() => {
         axios.get('https://api.chucknorris.io/jokes/random')

@@ -9,24 +9,33 @@ Vue.filter('uppercase', function (value) {
 });
 const vm = new Vue({
   el: "#app",
-  data: {
-    text: "style me!",
-    styled: "",
-    bgcolor: "",
-    date: "",
-    show: true,
-    employee: {
-      id: "",
-      firstName: "John",
-      lastName: "",
-      department: ""
+  components: {
+    "Binding": Binding
+  },
+  data() {
+    return {
+      text: "style me!",
+      styled: "",
+      bgcolor: "",
+      show: true,
+      info: {},
+      employee: {
+        id: "",
+        value: "john",
+        lastName: "",
+        department: ""
+      }
     }
   },
-  render: h => h(Binding, {
-  }),
   methods:{
     
-  }
+  },
+  template: `<Binding />`,
+  // components: {
+  //   "Binding": Binding
+  // },
+  // render: h => h(Binding, {
+  // }),
 });
 // vm.$mount('#app')
 
