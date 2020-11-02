@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Binding from './components/Binding.vue';
+//import App from './App.vue';
+const axios = require('axios');
 
 Vue.config.productionTip = false;
 Vue.filter('uppercase', function (value) {
@@ -17,17 +19,37 @@ const vm = new Vue({
     show: true,
     employee: {
       id: "",
-      firstName: "John",
+      value: "John",
       lastName: "",
       department: ""
-    }
+    },
+    updateEmployeeFunc: {}
   },
-  render: h => h(Binding, {
-  }),
-  methods:{
-    
+  render : function(createElement) {
+    var self = this;
+    return createElement(Binding, {
+      props : {
+        initialEmployee : self.employee
+      },
+      on : {
+        initUpdateEmployeeFunc : function(updateEmployee) {
+          self.updateEmployeeFunc = updateEmployee;
+        }
+      }
+    });
+  },
+  methods : {
+    updateEmployee(newEmpl) {
+      if (this.updateEmployeeFunc) {
+        this.updateEmployeeFunc(newEmpl);
+      }
+    }
   }
 });
-// vm.$mount('#app')
 
-console.log(vm)
+setInterval(() => {
+  axios.get('https://api.chucknorris.io/jokes/random')
+    .then(response => {
+      vm.updateEmployee(response.data);
+    })
+}, 4000);

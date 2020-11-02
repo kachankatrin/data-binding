@@ -23,9 +23,11 @@
 </template>
 
 <script>
-const axios = require('axios');
 export default {
   name: "Binding",
+  props: {
+    initialEmployee: Object
+  },
   data() {
     return {
       text: "style me!",
@@ -46,26 +48,17 @@ export default {
       return this.show ? "visible" : "hidden";
     }
   },
-  // beforeCreate() {
-  //   this._data = this.$parent._data
-  // },
   created() {
-    this.init()
+    this.updateEmployee(this.initialEmployee);
+    this.$emit("initUpdateEmployeeFunc", this.updateEmployee);
   },
   updated() {},
   methods: {
     hide() {
       this.show = !this.show;
     },
-    init() {
-      setInterval(() => {
-        axios.get('https://api.chucknorris.io/jokes/random')
-      .then(response => { this.employee = response.data})
-      // .then(data => {console.log("ready");this.employee = data.json()});
-        // fetch("http://localhost:8082/api/employee", {
-        //   mode: "no-cors"
-        //   }).then(res => {console.log("result", res)}).catch(err => console.log("error", err))
-      }, 4000) 
+    updateEmployee(newEmployee) {
+      this.employee = newEmployee;
     },
   },
   filters: {
